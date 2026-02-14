@@ -48,4 +48,29 @@ document.addEventListener('DOMContentLoaded', function(){
             window.location.href = 'home.html';
         }, 2000);
     });
-})
+
+    // Toggle password para login
+    const togglePassword = document.getElementById('togglePassword');
+    const passwordInput = document.getElementById('password');
+
+    togglePassword.addEventListener('click', function () {
+        const start = passwordInput.selectionStart;
+        const end = passwordInput.selectionEnd;
+
+        const mostrar = passwordInput.type === 'password';
+        passwordInput.type = mostrar ? 'text' : 'password';
+
+        const icon = this.querySelector('i');
+        icon.classList.toggle('bi-eye', !mostrar);
+        icon.classList.toggle('bi-eye-slash', mostrar);
+
+        this.setAttribute('aria-label', mostrar ? 'Ocultar contraseña' : 'Mostrar contraseña');
+        this.setAttribute('title', this.getAttribute('aria-label'));
+
+        setTimeout(() => {
+            passwordInput.focus();
+            if (start !== null && end !== null) passwordInput.setSelectionRange(start, end);
+        }, 0);
+    });
+
+});
