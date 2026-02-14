@@ -1,0 +1,122 @@
+/* Layout de Dashboard */
+body {
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+}
+
+/* Contenedor principal con flexbox */
+.container-fluid {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    padding: 0;
+}
+
+/* Row principal que contendrá el sidebar y el contenido */
+.row.min-vh-100 {
+    flex: 1;
+    display: flex;
+    flex-wrap: nowrap;
+    margin: 0;
+    width: 100%;
+}
+
+/* Sidebar - Navegación lateral */
+aside.col-md-3 {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    width: 25%;
+    overflow-y: auto;
+    flex-shrink: 0;
+    padding: 1.5rem !important;
+}
+
+/* Contenedor del contenido principal - con espacio para el sidebar */
+main.col-md-9 {
+    margin-left: 25%;
+    width: 75%;
+    flex: 1;
+    padding: 1.5rem;
+    padding-bottom: 4rem;
+}
+
+/* Footer - ajustado para estar dentro del row */
+.row.min-vh-100 footer {
+    position: fixed;
+    bottom: 0;
+    left: 25%;
+    width: 75%;
+    padding: 1rem;
+    background-color: #f8f9fa;
+    border-top: 1px solid #dee2e6;
+    text-align: center;
+    z-index: 10;
+}
+
+/* Estilos adicionales para mejorar la apariencia */
+aside h4 {
+    border-bottom: 2px solid rgba(255, 255, 255, 0.2);
+    padding-bottom: 0.5rem;
+}
+
+aside .nav-link {
+    border-radius: 0.25rem;
+    margin-bottom: 0.25rem;
+    transition: background-color 0.3s ease;
+}
+
+aside .nav-link:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+/* Estado activo del nav */
+aside .nav-link.active {
+    background-color: rgba(255, 255, 255, 0.2);
+    font-weight: bold;
+}
+
+/* Estilos para las cards del home */
+.hover-card {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    cursor: pointer;
+}
+
+.hover-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15) !important;
+}
+
+.hover-card .card-body {
+    padding: 2rem;
+}
+
+/* Responsivo - En pantallas pequeñas */
+@media (max-width: 768px) {
+    .container-fluid {
+        flex-direction: column;
+    }
+    
+    .row.min-vh-100 {
+        flex-wrap: wrap;
+    }
+    
+    aside.col-md-3 {
+        position: relative;
+        width: 100%;
+        height: auto;
+    }
+    
+    main.col-md-9 {
+        margin-left: 0;
+        width: 100%;
+    }
+    
+    .row.min-vh-100 footer {
+        position: relative;
+        left: 0;
+        width: 100%;
+    }
+}
