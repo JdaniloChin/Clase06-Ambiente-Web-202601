@@ -49,28 +49,35 @@ document.addEventListener('DOMContentLoaded', function(){
         }, 2000);
     });
 
-    // Toggle password para login
-    const togglePassword = document.getElementById('togglePassword');
-    const passwordInput = document.getElementById('password');
+    // Toggle password dinamico
+    const toggleButtons = document.querySelectorAll('button[id^="toggle"]');
 
-    togglePassword.addEventListener('click', function () {
-        const start = passwordInput.selectionStart;
-        const end = passwordInput.selectionEnd;
+    toggleButtons.forEach(button =>{
+        button.addEventListener('click', function(){
+            //Encontrar el input de contraseña asociado al boton en el input-group
+            const passwordInput = this.parentElement.querySelector('input[type="password"], input[type="text"]');
+            
+            if(!passwordInput) return;
 
-        const mostrar = passwordInput.type === 'password';
-        passwordInput.type = mostrar ? 'text' : 'password';
+            const start = passwordInput.selectionStart;
+            const end = passwordInput.selectionEnd;
 
-        const icon = this.querySelector('i');
-        icon.classList.toggle('bi-eye', !mostrar);
-        icon.classList.toggle('bi-eye-slash', mostrar);
+            const mostrar = passwordInput.type === 'password';
+            passwordInput.type = mostrar ? 'text' : 'password';
 
-        this.setAttribute('aria-label', mostrar ? 'Ocultar contraseña' : 'Mostrar contraseña');
-        this.setAttribute('title', this.getAttribute('aria-label'));
+            const icon = this.querySelector('i');
+            icon.classList.toggle('bi-eye', !mostrar);
+            icon.classList.toggle('bi-eye-slash', mostrar);
 
-        setTimeout(() => {
-            passwordInput.focus();
-            if (start !== null && end !== null) passwordInput.setSelectionRange(start, end);
-        }, 0);
+            this.setAttribute('aria-label', mostrar ? 'Ocultar contraseña' : 'Mostrar contraseña');
+            this.setAttribute('title', this.getAttribute('aria-label'));
+
+            setTimeout(() => {
+                passwordInput.focus();
+                if (start !== null && end !== null) passwordInput.setSelectionRange(start, end);
+            }, 0);
+
+        });
     });
 
 });
