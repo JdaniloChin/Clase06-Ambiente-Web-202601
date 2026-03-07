@@ -1,4 +1,5 @@
 <?php
+    session_start();
     require_once('database.php');
 
     if($_SERVER['REQUEST_METHOD'] === 'POST'){
@@ -25,12 +26,14 @@
                     $_SESSION['rol'] = $usuario['rol'];
                     $_SESSION['correo'] = $email;
                     
-                    header("Location: home.php");
+                    header("Location: ../home.php");
                     exit();
                 }
             }else{
                 $mensaje = "Correo no registrado";
                 $_SESSION['mensaje'] = $mensaje;
+                header("Location: ../index.php");
+                exit();
             }
             $stmt->close();
             $mysqli->close();

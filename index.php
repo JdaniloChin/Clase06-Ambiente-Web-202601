@@ -1,6 +1,5 @@
 <?php
     session_start();
-    include './includes/login.php';
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -35,7 +34,7 @@
                 <div class="tab-content" id="authTabsContent">
                     <!-- Tab Login-->
                     <div class="tab-pane fade show active" id="login" role="tabpanel" aria-labelledby="login-tab">
-                        <form id="loginform" method="post">
+                        <form id="loginform" method="post" action="./includes/login.php">
                             <div class="mb-3">
                                 <label class="form-label" for="user">Usuario:</label>
                                 <input type="email" id="user" name="user" class="form-control" required placeholder="usuario@dominio.com">
@@ -49,7 +48,7 @@
                             </div>
                             <button type="submit" class="btn btn-primary w-100">Iniciar Sesion</button>
                              <?php if(isset($_SESSION['mensaje'])): ?>
-                                <div id="login-error" class="text-danger mt-3" style="display: block;">
+                                <div id="login-error" class="alert alert-<?= $_SESSION['tipo_mensaje'] ?> mt-3" style="display: block;">
                                     <p> <?= $_SESSION['mensaje'] ?></p>
                                 </div>
                                 <?php unset($_SESSION['mensaje']); ?>
@@ -59,7 +58,7 @@
 
                     <!--Tab Register-->
                     <div class="tab-pane fade show" id="register" role="tabpanel" aria-labelledby="register-tab">
-                        <form id="registerform" method="post">
+                        <form id="registerform" method="post" action="./includes/register.php">
                             <div class="mb-3">
                                 <label class="form-label" for="name">Nombre Completo:</label>
                                 <input type="text" id="name" name="name" class="form-control" required placeholder="Juan Perez">
@@ -83,12 +82,6 @@
                                 </button>
                             </div>
                             <button type="submit" class="btn btn-success w-100">Rgistrarse</button>
-                            <div id="register-error" class="text-danger mt-3" style="display: none;">
-                                <p>Error al registro. Verifica los datos</p>
-                            </div>
-                            <div id="register-success" class="text-success mt-3" style="display: none;">
-                                <p>¡Registro exitoso! Redirigiendo...</p>
-                            </div>
                         </form>
                     </div>
                 </div>

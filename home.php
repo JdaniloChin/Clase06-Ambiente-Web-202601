@@ -1,3 +1,10 @@
+<?php
+    session_start();
+    if(!isset($_SESSION['nombre_usuario'])){
+        header("Location: index.php");
+        exit();
+    }
+?>
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -14,7 +21,8 @@
             <!-- Navbar y footer se insertan dinámicamente aquí -->
             
             <main class="col-md-9 p-4">
-                <h1 class="text-center mb-3">Bienvenido usuario</h1>
+                <h1 class="text-center mb-3">Bienvenido <?=  $_SESSION['nombre_usuario']?> (<?=   $_SESSION['rol']?>)</h1>
+                <h3 class="text-center"><?= $_SESSION['correo']?></h3>
                 <p class="text-center text-muted mb-5">
                     <strong>Sistema de Punto de Venta</strong><br>
                     Ejemplo para desarrollar en el Curso Ambiente Web Cliente Servidor Universidad Fidélitas
