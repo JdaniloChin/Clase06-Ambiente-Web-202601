@@ -1,3 +1,7 @@
+<?php
+    session_start();
+    include './includes/login.php';
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -44,9 +48,12 @@
                                 </button>
                             </div>
                             <button type="submit" class="btn btn-primary w-100">Iniciar Sesion</button>
-                            <div id="login-error" class="text-danger mt-3" style="display: none;">
-                                <p>Correo o contraseña invalida</p>
-                            </div>
+                             <?php if(isset($_SESSION['mensaje'])): ?>
+                                <div id="login-error" class="text-danger mt-3" style="display: block;">
+                                    <p> <?= $_SESSION['mensaje'] ?></p>
+                                </div>
+                                <?php unset($_SESSION['mensaje']); ?>
+                            <?php endif; ?>
                         </form>
                     </div>
 
@@ -92,6 +99,6 @@
         <p>&copy; Desarrollado por AWCS - Universidad Fidélitas</p>
     </footer>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="./JS/authentication.js"></script>
+    <!-- <script src="./JS/authentication.js"></script> -->
 </body>
 </html>
