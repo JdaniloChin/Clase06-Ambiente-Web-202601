@@ -3,50 +3,67 @@ document.addEventListener('DOMContentLoaded', function(){
     const loginForm = document.getElementById('loginform');
     const loginError = document.getElementById('login-error');
 
-    loginForm.addEventListener('submit', function(e){
+       //Login usuario ajax
+    $(loginForm).on('submit', function(e){
         e.preventDefault();
+        alert("ente");
+        const datos = $(this).serialize();
 
-        const user = document.getElementById('user').value;
-        const password = document.getElementById('password').value;
+        $.post('./includes/login.php', datos, function(respuesta){
+            console.log("Login al sistema: ", respuesta);
+            if(!loginError){
+                console.error("no existe el div login-error");
+                return;
+            }
+            loginError.innerHTML = `<p> ${respuesta} </p>`;
+            loginError.classList.remove('alert-info', 'alert-danger', 'alert-success');
+            if(respuesta.trim() === "Login exitoso"){
+                loginError.classList.add('alert-success');
+                loginError.style.display = "block";
+                setTimeout(()=> {
+                    window.location.href = 'home.php';
+                }, 2000);
+            }else{
+                loginError.classList.add('alert-danger');
+                loginError.style.display = "block";
+            }
+            
+        });
 
-        if(user === 'test@example.com' && password === 'password123'){
-            window.location.href='home.html';
-        }else{
-            loginError.style.display = 'block'
-        }
     });
 
     //Register form
     const registerForm = document.getElementById('registerform');
     const registerError = document.getElementById('register-error');
-    const registerSuccess = document.getElementById('register-success');
 
-    registerForm.addEventListener('submit',function(e){
+    $(registerForm).on('submit',function(e){
         e.preventDefault();
 
-        const name= document.getElementById('name').value;
-        const email = document.getElementById('email').value;
-        const password = document.getElementById('register-password').value;
-        const confirmPassword = document.getElementById('register-password-confirm')
+        const password = $('#register-password').val();
+        const confirm  = $('#register-password-confirm').val();
 
-        //Validar que las contraseñas coincidan
-        if(password !== confirmPassword){
-            registerError.innerHTML('<p>Las contraseñas no coinciden.<\p>')
+        //validacion del lado cliente rapida
+        if(password !== confirm){
+            registerError.className = 'alert alert-danger mt-3';
+            registerError.innerHTML = '<p>Las contraseñas no coinciden.</p>';
             registerError.style.display = 'block';
-            registerSuccess.style.display = 'none';
             return;
         }
 
-        //Aqui vamos a escribir la logica para guardar en el servidor
-        //Por ahora, solo simulamos
+        const datos = $(this).serialize();
+        $.post('./includes/register.php', datos, function(respuesta){
+            const res = JSON.parse(respuesta);
+            console.error('Respuesta de Register:', res)
+            registerError.className = 'alert alert-${res.tipo} mt-3';
+            registerError.innerHTML = '<p>${res.mensaje}</p>';
+            registerError.style.display = 'block';
 
-        registerError.style.display = 'none';
-        registerSuccess.style.display = 'block';
-
-        //Redirigir en 2 segundos
-        setTimeout(()=>{
-            window.location.href = 'home.html';
-        }, 2000);
+            if(res.tipo === 'success'){
+                setTimeout(()=>{
+                    window.location.href = 'index.php';
+                },2000);
+            }
+        });
     });
 
     // Toggle password dinamico

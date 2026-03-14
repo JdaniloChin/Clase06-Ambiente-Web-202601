@@ -9,6 +9,7 @@
         //VALIDAR DATOS
         if(!filter_var($email, FILTER_VALIDATE_EMAIL)){
             $mensaje  = "Correo invalido";
+            echo $mensaje;
         }else{
             //Buscar el correo en la base de datos
             $sql = "SELECT  nombre, clave, rol FROM usuarios WHERE correo = ?";
@@ -25,15 +26,15 @@
                     $_SESSION['nombre_usuario'] = $usuario['nombre'];
                     $_SESSION['rol'] = $usuario['rol'];
                     $_SESSION['correo'] = $email;
-                    
-                    header("Location: ../home.php");
-                    exit();
+                    $mensaje = "Login exitoso";
+                    echo $mensaje;
+                }else{
+                    $mensaje = "Credenciales invalidas, la constraseña es incorrecta";
+                    echo $mensaje;
                 }
             }else{
                 $mensaje = "Correo no registrado";
-                $_SESSION['mensaje'] = $mensaje;
-                header("Location: ../index.php");
-                exit();
+                echo $mensaje;
             }
             $stmt->close();
             $mysqli->close();

@@ -8,6 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-4.0.0.js" integrity="sha256-9fsHeVnKBvqh3FB2HYu7g2xseAZ5MlN6Kz/qnkASV8U=" crossorigin="anonymous"></script>
     <link href="./CSS/styles.css" rel="stylesheet">
     <title>Clase 05</title>
 </head>
@@ -34,7 +35,7 @@
                 <div class="tab-content" id="authTabsContent">
                     <!-- Tab Login-->
                     <div class="tab-pane fade show active" id="login" role="tabpanel" aria-labelledby="login-tab">
-                        <form id="loginform" method="post" action="./includes/login.php">
+                        <form id="loginform" method="post" >
                             <div class="mb-3">
                                 <label class="form-label" for="user">Usuario:</label>
                                 <input type="email" id="user" name="user" class="form-control" required placeholder="usuario@dominio.com">
@@ -47,18 +48,13 @@
                                 </button>
                             </div>
                             <button type="submit" class="btn btn-primary w-100">Iniciar Sesion</button>
-                             <?php if(isset($_SESSION['mensaje'])): ?>
-                                <div id="login-error" class="alert alert-<?= $_SESSION['tipo_mensaje'] ?> mt-3" style="display: block;">
-                                    <p> <?= $_SESSION['mensaje'] ?></p>
-                                </div>
-                                <?php unset($_SESSION['mensaje']); ?>
-                            <?php endif; ?>
+                            <div id="login-error" class="alert alert-info mt-3" style="display: none;"></div>
                         </form>
                     </div>
 
                     <!--Tab Register-->
                     <div class="tab-pane fade show" id="register" role="tabpanel" aria-labelledby="register-tab">
-                        <form id="registerform" method="post" action="./includes/register.php">
+                        <form id="registerform" method="post">
                             <div class="mb-3">
                                 <label class="form-label" for="name">Nombre Completo:</label>
                                 <input type="text" id="name" name="name" class="form-control" required placeholder="Juan Perez">
@@ -82,6 +78,7 @@
                                 </button>
                             </div>
                             <button type="submit" class="btn btn-success w-100">Rgistrarse</button>
+                            <div id="register-error" class="alert alert-info mt-3" style="display: none;"></div>
                         </form>
                     </div>
                 </div>
@@ -92,6 +89,6 @@
         <p>&copy; Desarrollado por AWCS - Universidad Fidélitas</p>
     </footer>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js"></script>
-    <!-- <script src="./JS/authentication.js"></script> -->
+    <script src="./JS/authentication.js"></script> 
 </body>
 </html>

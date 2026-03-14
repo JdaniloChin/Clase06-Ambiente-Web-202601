@@ -39,9 +39,10 @@
             $stmt->close();
             $mysqli->close();
         }
-        $_SESSION['mensaje'] = $mensaje;
-        $_SESSION['tipo_mensaje'] = $tipo_mensaje;
-        header("Location: ../index.php");
+        
+        $respuesta['mensaje'] = $mensaje;
+        $respuesta['tipo'] = $tipo_mensaje;
+        echo json_encode($respuesta);
         exit();
     }
 ?>
