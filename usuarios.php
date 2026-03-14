@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-4.0.0.js" integrity="sha256-9fsHeVnKBvqh3FB2HYu7g2xseAZ5MlN6Kz/qnkASV8U=" crossorigin="anonymous"></script>
     <link href="./CSS/styles.css" rel="stylesheet">
     <title>Usuarios</title>
 </head>
@@ -23,11 +24,11 @@
                     <thead class="table-dark">
                         <tr>
                             <th>Nombre</th>
-                            <th>Cedula</th>
-                            <th>Email</th>
                             <th>Género</th>
-                            <th>Provincia</th>
-                            <th>Dirección</th>
+                            <th>Usuario</th>
+                            <th>Correo</th>
+                            <th>Rol</th>
+                            <th>Estado</th>
                             <th>Acciones</th>
                         </tr>
                     </thead>
@@ -49,13 +50,14 @@
                 </div>
                 <div class="modal-body">
                     <form id="formUsuarios" method="post">
+                        <input type="hidden" id="id_usuario" name="id_usuario">
                         <div class="mb-3">
                             <label for="nombre" class="form-label">Nombre Completo:</label>
                             <input type="text" id="nombre" name="nombre" class="form-control" placeholder="Juan Pérez" required>
                         </div>
                         <div class="mb-3">
-                            <label for="identificacion" class="form-label">Identificación:</label>
-                            <input type="text" id="identificacion" name="identificacion" class="form-control" placeholder="X-XXXX-XXXX" required>
+                            <label for="password" class="form-label">Contraseña:</label>
+                            <input type="password" id="password" name="password" class="form-control" placeholder="Contraseña inicial" required>
                         </div>
                         <div class="mb-3">
                             <label for="email" class="form-label">Correo electrónico:</label>
@@ -76,25 +78,22 @@
                                 <label class="form-check-label" for="otro"> Otro</label>
                             </div>
                         </div>
-                        <div class="mb-3 mt-3">
-                            <label class="form-label">Dirección:</label>
-                            <div class="mb-3">
-                                <label class="form-label" for="provincia">Provincia:</label>
-                                <select name="provincia" id="provincia" class="form-select">
-                                    <option value="-1">Seleccione una provincia</option>
-                                    <option value="1">San José</option>
-                                    <option value="2">Alajuela</option>
-                                    <option value="3">Cartago</option>
-                                    <option value="4">Heredia</option>
-                                    <option value="5">Guanacaste</option>
-                                    <option value="6">Puntarenas</option>
-                                    <option value="7">Limón</option>
-                                </select>
-                            </div>
-                            <div class="mb-3">
-                                <label for="direccion" class="form-label">Dirección Exacta:</label>
-                                <textarea cols="60" rows="5" class="form-control" id="direccion" name="direccion" placeholder="400 m sur del antigüo Higueron, donde esta el perro echado"></textarea>
-                            </div>
+                        <div class="mb-3">
+                            <label for="rol" class="form-label">Rol:</label>
+                            <select name="rol" id="rol" class="form-select">
+                                <option value="-1">Seleccione un rol</option>
+                                <option value="Admin">Administrador</option>
+                                <option value="Cliente">Cliente</option>
+                                <option value="Vendedor">Vendedor</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="estado" class="form-label">Estado:</label>
+                            <select name="estado" id="estado" class="form-select">
+                                <option value="-1">Seleccione un estado</option>
+                                <option value="A">Activo</option>
+                                <option value="I">Inactivo</option>
+                            </select>
                         </div>
                         <button type="submit" class="btn btn-success" id="btnGuardar">Guardar Usuario</button>
                     </form>
