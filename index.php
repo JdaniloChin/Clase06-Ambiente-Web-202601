@@ -1,3 +1,6 @@
+<?php
+    session_start();
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -31,7 +34,7 @@
                 <div class="tab-content" id="authTabsContent">
                     <!-- Tab Login-->
                     <div class="tab-pane fade show active" id="login" role="tabpanel" aria-labelledby="login-tab">
-                        <form id="loginform" method="post">
+                        <form id="loginform" method="post" action="./includes/login.php">
                             <div class="mb-3">
                                 <label class="form-label" for="user">Usuario:</label>
                                 <input type="email" id="user" name="user" class="form-control" required placeholder="usuario@dominio.com">
@@ -44,15 +47,18 @@
                                 </button>
                             </div>
                             <button type="submit" class="btn btn-primary w-100">Iniciar Sesion</button>
-                            <div id="login-error" class="text-danger mt-3" style="display: none;">
-                                <p>Correo o contraseña invalida</p>
-                            </div>
+                             <?php if(isset($_SESSION['mensaje'])): ?>
+                                <div id="login-error" class="alert alert-<?= $_SESSION['tipo_mensaje'] ?> mt-3" style="display: block;">
+                                    <p> <?= $_SESSION['mensaje'] ?></p>
+                                </div>
+                                <?php unset($_SESSION['mensaje']); ?>
+                            <?php endif; ?>
                         </form>
                     </div>
 
                     <!--Tab Register-->
                     <div class="tab-pane fade show" id="register" role="tabpanel" aria-labelledby="register-tab">
-                        <form id="registerform" method="post">
+                        <form id="registerform" method="post" action="./includes/register.php">
                             <div class="mb-3">
                                 <label class="form-label" for="name">Nombre Completo:</label>
                                 <input type="text" id="name" name="name" class="form-control" required placeholder="Juan Perez">
@@ -76,12 +82,6 @@
                                 </button>
                             </div>
                             <button type="submit" class="btn btn-success w-100">Rgistrarse</button>
-                            <div id="register-error" class="text-danger mt-3" style="display: none;">
-                                <p>Error al registro. Verifica los datos</p>
-                            </div>
-                            <div id="register-success" class="text-success mt-3" style="display: none;">
-                                <p>¡Registro exitoso! Redirigiendo...</p>
-                            </div>
                         </form>
                     </div>
                 </div>
@@ -92,6 +92,6 @@
         <p>&copy; Desarrollado por AWCS - Universidad Fidélitas</p>
     </footer>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="./JS/authentication.js"></script>
+    <!-- <script src="./JS/authentication.js"></script> -->
 </body>
 </html>

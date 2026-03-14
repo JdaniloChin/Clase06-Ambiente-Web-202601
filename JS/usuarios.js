@@ -13,7 +13,7 @@ document.addEventListener('DOMContentLoaded', function(){
         const direccion = document.getElementById('direccion');
 
         //validaciones
-        if(!nombre || !email || !identificacion || !provincincia == "-1"){
+        if(!nombre || !email || !identificacion || !provincia == "-1"){
             alert("Por favor, complete los campos obligatorios");
             return;
         }

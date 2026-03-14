@@ -22,6 +22,9 @@ function createNavbar(activePage) {
                     </li>
                 `).join('')}
             </ul>
+            <form action="./includes/logout.php" method="post" class="mt-4">
+                <button type="submit" class="btn btn-danger w-100">Cerrar Sesión</button>
+            </form>
         </aside>
     `;
 
