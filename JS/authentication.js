@@ -54,8 +54,8 @@ document.addEventListener('DOMContentLoaded', function(){
         $.post('./includes/register.php', datos, function(respuesta){
             const res = JSON.parse(respuesta);
             console.error('Respuesta de Register:', res)
-            registerError.className = 'alert alert-${res.tipo} mt-3';
-            registerError.innerHTML = '<p>${res.mensaje}</p>';
+            registerError.className = `alert alert-${res.tipo} mt-3`;
+            registerError.innerHTML = `<p>${res.mensaje}</p>`;
             registerError.style.display = 'block';
 
             if(res.tipo === 'success'){

@@ -1,10 +1,10 @@
 // Componente de navegación
 function createNavbar(activePage) {
     const menuItems = [
-        { text: 'Inicio', href: './home.html', page: 'home' },
-        { text: 'Usuarios', href: './usuarios.html', page: 'usuarios' },
-        { text: 'Productos', href: './inventarios.html', page: 'inventarios' },
-        { text: 'Ventas', href: './ventas.html', page: 'ventas' },
+        { text: 'Inicio', href: './home.php', page: 'home' },
+        { text: 'Usuarios', href: './usuarios.php', page: 'usuarios' },
+        { text: 'Productos', href: './inventarios.php', page: 'inventarios' },
+        { text: 'Ventas', href: './ventas.php', page: 'ventas' },
         { text: 'Reportes', href: '#', page: 'reportes' },
         { text: 'Configuración', href: '#', page: 'configuracion' }
     ];

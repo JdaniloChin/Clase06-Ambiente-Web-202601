@@ -32,19 +32,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td>Danilo</td>
-                            <td>7-0206-0059</td>
-                            <td>test@example.com</td>
-                            <td>Masculino</td>
-                            <td>Heredia</td>
-                            <td>100m oeste del chino</td>
-                            <td>
-                                <a href="#" class="btn btn-warning btn-sm btnEditar">Editar</a>
-                                <a href="#" class="btn btn-danger btn-sm"
-                                    onclick="return confirm('¿Está seguro de eliminar este usuario?')">Eliminar</a>
-                            </td>
-                        </tr>
+                        <!-- Se van agregar dinamicamente desde js -->
                     </tbody>
                 </table>
             </main>

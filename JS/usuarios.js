@@ -2,6 +2,8 @@ document.addEventListener('DOMContentLoaded', function(){
     const tablaUsuarios = document.getElementById('tablaUsuarios');
     const form = document.getElementById('formUsuarios');
 
+    cargarUsuarios();
+
     form.addEventListener('submit', function(e){
         e.preventDefault();
 
@@ -38,4 +40,10 @@ document.addEventListener('DOMContentLoaded', function(){
         const modal = bootstrap.Modal.getInstance(document.getElementById('modalFormulario'));
         modal.hide();
     });
+
+    function cargarUsuarios(){
+        $.get('./includes/obtener_usuarios.php', function(data){
+            $('#tablaUsuarios tbody').html(data);
+        });
+    }
 });
