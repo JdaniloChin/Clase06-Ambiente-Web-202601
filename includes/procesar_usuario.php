@@ -31,6 +31,9 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
                     genero = ?" .
                     (!empty($pass) ? ", clave = ?" : "" ) . "
                     WHERE id_usuario = ?";
+                    
+            $stmt = $mysqli->prepare($sql);
+
             if(!empty($pass)){
                 if(!$stmt->bind_param('sssssssi',$nombre,$correo,$correo,$rol,$estado,$genero,$pass_hash,$id)){
                     $mensaje= "Error al enlzar parametros del update";
@@ -44,7 +47,10 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
                     $tipo= "danger";
                 }
             }
-            $stmt->execute();
+            if(!$stmt->execute()){
+              $mensaje= "Error al ejecutar update";
+              $tipo= "danger";  
+            }
 
             if($stmt->sqlstate == '00000'){
                 $mensaje = "Usuario Actualizado Correctamente";

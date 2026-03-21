@@ -4,11 +4,12 @@ document.addEventListener('DOMContentLoaded', function(){
     const modalElement = document.getElementById('modalUsuarios')
     const modal = new bootstrap.Modal(modalElement);
     const modalTitle = document.getElementById('modalUsuariosLabel');
+    const inputPassword = document.getElementById('password');
     
 
     cargarUsuarios();
 
-    //Create (Guardar Usuario)
+    //Create - Update (Guardar Usuario)
     $(form).on('submit', function(e){
         e.preventDefault();
 
@@ -38,11 +39,42 @@ document.addEventListener('DOMContentLoaded', function(){
         form.reset();
         $('#id_usuario').val('');
         modalTitle.textContent = 'Registro de Usuarios';
+        inputPassword.setAttribute('required','');
     });
 
+    //Read obtener lista usuarios
     function cargarUsuarios(){
         $.get('./includes/obtener_usuarios.php', function(data){
             $('#tablaUsuarios tbody').html(data);
         });
     }
+
+    //Update Modificar usuario
+    $(document).on('click', '.btnEditar', function(){
+        const id = $(this).data('id');
+        const nombre = $(this).data('nombre');
+        const correo = $(this).data('correo');
+        const genero = $(this).data('genero');
+        const rol = $(this).data('rol');
+        const estado = $(this).data('estado');
+
+        //cambiar el titulo del formulario
+        modalTitle.textContent = "Editar Usuario";
+
+        //precargar los datos del usuario en la tabla del formulario
+        $('#id_usuario').val(id);
+        $('#nombre').val(nombre);
+        $('#email').val(correo);
+        $('#rol').val(rol);
+        $('#estado').val(estado);
+
+        //Genero radio buttons
+        $('input[name="genero"]').prop('checked',false);
+        $('input[name="genero"][vaule="'+ genero +'"]').prop('checked',true);
+
+        $('#password').val('');
+        inputPassword.removeAttribute('required');
+
+        modal.show();
+    });
 });

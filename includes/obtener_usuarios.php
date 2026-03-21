@@ -12,7 +12,14 @@ if($resultado && $resultado->num_rows>0){
                 <td>" . htmlspecialchars($usuario['rol']) . "</td>
                 <td>" . htmlspecialchars($usuario['estado']) . "</td>
                 <td>
-                        <a href='#' class='btn btn-warning btn-sm btnEditar'>Editar</a>
+                        <a href='#' 
+                        data-id='{$usuario['id_usuario']}'
+                        data-nombre='{$usuario['nombre']}'
+                        data-correo='{$usuario['correo']}'
+                        data-rol='{$usuario['rol']}'
+                        data-estado='{$usuario['estado']}'
+                        data-genero='{$usuario['genero']}'
+                        class='btn btn-warning btn-sm btnEditar'>Editar</a>
                         <a href='#' data-id='{$usuario['id_usuario']}' class='btn btn-danger btn-sm btnEliminar'>Eliminar</a>
                 </td>
             </tr>";
