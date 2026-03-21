@@ -10,12 +10,15 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
     $estado = $_POST['estado'];
     $rol = $_POST['rol'];
 
+
+    
+
     //validaciones
     if(!filter_var($correo, FILTER_VALIDATE_EMAIL)){
             $mensaje = "Correo invalido";
             $tipo_mensaje = "danger";
     }else{
-        $pass_hash = password_hash($pass, PASSWORD_DEFAULT);
+        $pass_hash = password_hash($clave, PASSWORD_DEFAULT);
 
         if(!empty($id)){
             //update
@@ -29,9 +32,17 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
                     (!empty($pass) ? ", clave = ?" : "" ) . "
                     WHERE id_usuario = ?";
             if(!empty($pass)){
-                $stmt->bind_param('sssssssi',$nombre,$correo,$correo,$rol,$estado,$genero,$pass_hash,$id);
+                if(!$stmt->bind_param('sssssssi',$nombre,$correo,$correo,$rol,$estado,$genero,$pass_hash,$id)){
+                    $mensaje= "Error al enlzar parametros del update";
+                    $tipo= "danger";
+                }
+                
             }else{
-                $stmt->bind_param('ssssssi',$nombre,$correo,$correo,$rol,$estado,$genero,$id);
+                
+                if(!$stmt->bind_param('ssssssi',$nombre,$correo,$correo,$rol,$estado,$genero,$id)){
+                    $mensaje= "Error al enlzar parametros del update";
+                    $tipo= "danger";
+                }
             }
             $stmt->execute();
 
@@ -50,7 +61,10 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
             //CREATE -> INSERT
             $sql= "INSERT INTO usuarios(nombre, usuario, clave, correo, rol, genero, estado) VALUES (?,?,?,?,?,?,?)";
             $stmt = $mysqli->prepare($sql);
-            $stmt->bind_param("sssss",$nombre,$correo,$clave_hash,$correo,$rol,$genero,$estado);
+            if(!$stmt->bind_param("sssssss",$nombre,$correo,$pass_hash,$correo,$rol,$genero,$estado)){
+                $mensaje= "Error al enlzar parametros del insert";
+                $tipo= "danger";
+            }
             $stmt->execute();
 
             if($stmt->sqlstate == '00000'){
@@ -64,6 +78,7 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
                 $mensaje = "Error, el usuario no se puedo crear, código de error: " . $stmt->sqlstate;
                 $tipo_mensaje = "danger";
             }
+            
         }
         $stmt->close();
         $mysqli->close();
@@ -73,5 +88,34 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
         exit();
     }
 
+}
+
+if(isset($GET['eliminar'])){
+    $id = $GET['eliminar'];
+    $sql = "DELETE FROM usuarios WHERE id_usuario = ?";
+    $stmt = $mysqli->prepare($sql);
+    $stmt->bind_param("i",$id);
+    $stmt->execute();
+
+    if($stmt->sqlstate == '00000'){
+        $mensaje = "Usuario eliminado Correctamente";
+        $tipo_mensaje = "success";
+
+    }elseif($stmt->sqlstate > 0){
+        $mensaje = "Advertencia, usuario eliminado pero con un mensaje: " . $stmt->sqlstate;
+        $tipo_mensaje = "warning";
+    }else{
+        $mensaje = "Error, el usuario no se puedo eliminar, código de error: " . $stmt->sqlstate;
+        $tipo_mensaje = "danger";
+    }
+
+    $stmt->close();
+    $mysqli->close();
+
+    $respuesta['tipo']=$tipo_mensaje;
+    $respuesta['mensaje']=$mensaje;
+    echo json_encode($respuesta);
+    
+    exit();
 }
 ?>

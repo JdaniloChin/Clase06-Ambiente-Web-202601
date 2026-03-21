@@ -1,44 +1,43 @@
 document.addEventListener('DOMContentLoaded', function(){
     const tablaUsuarios = document.getElementById('tablaUsuarios');
     const form = document.getElementById('formUsuarios');
+    const modalElement = document.getElementById('modalUsuarios')
+    const modal = new bootstrap.Modal(modalElement);
+    const modalTitle = document.getElementById('modalUsuariosLabel');
+    
 
     cargarUsuarios();
 
-    form.addEventListener('submit', function(e){
+    //Create (Guardar Usuario)
+    $(form).on('submit', function(e){
         e.preventDefault();
 
-        const nombre = document.getElementById('nombre');
-        const identificacion = document.getElementById('identificacion');
-        const genero = document.getElementById('genero');
-        const provincia = document.getElementById('provincia');
-        const email = document.getElementById('email');
-        const direccion = document.getElementById('direccion');
+        const datos = $(this).serialize();
 
-        //validaciones
-        if(!nombre || !email || !identificacion || !provincia == "-1"){
-            alert("Por favor, complete los campos obligatorios");
-            return;
-        }
+        $.post('./includes/procesar_usuario.php', datos, function(respuesta){
+            const data = JSON.parse(respuesta);
+            console.log("Valor de respuesta: ", respuesta);
+            const alerta = `<div class="alert alert-${data.tipo} alert-dismissible fade show" role="alert">
+                ${data.mensaje} 
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Cerrar"></button>
+                </div>`;
+            
+            $('.modal-body').prepend(alerta);
 
-        const nuevaFila = tabla.insertRow();
-        nuevaFila.innerHTML = `
-        <td>${nombre}</td>
-        <td>${cedula}</td>
-        <td>${email}</td>
-        <td>${genero}</td>
-        <td>${provincia}</td>
-        <td>${direccion}</td>
-        <td>
-            <a href="#" class="btn btn-warning btn-sm btnEditar">Editar</a>
-            <a href="#" class="btn btn-danger btn-sm"
-            onclick="return confirm('¿Está seguro de eliminar este usuario?')">Eliminar</a>
-        </td>
-        `;
+            setTimeout(()=>{
+                modal.hide();
+                cargarUsuarios();
+            },2000);
 
+        });
+
+    });
+
+    //limpiar formulario del modal al cerrarlo
+    $(modalElement).on('hidden.bs.modal',() =>{
         form.reset();
-
-        const modal = bootstrap.Modal.getInstance(document.getElementById('modalFormulario'));
-        modal.hide();
+        $('#id_usuario').val('');
+        modalTitle.textContent = 'Registro de Usuarios';
     });
 
     function cargarUsuarios(){

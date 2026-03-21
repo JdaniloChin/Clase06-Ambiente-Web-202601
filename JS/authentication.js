@@ -6,7 +6,7 @@ document.addEventListener('DOMContentLoaded', function(){
        //Login usuario ajax
     $(loginForm).on('submit', function(e){
         e.preventDefault();
-        alert("ente");
+        
         const datos = $(this).serialize();
 
         $.post('./includes/login.php', datos, function(respuesta){
