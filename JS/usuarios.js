@@ -77,4 +77,17 @@ document.addEventListener('DOMContentLoaded', function(){
 
         modal.show();
     });
+
+    //Delete Eliminar usuario
+    $(document).on('click','.btnEliminar',function(e){
+        e.preventDefault();
+        if(!confirm('¿Esta seguro de eliminar este usuario?')) return;
+        const id = $(this).data('id');
+
+        $.get(`./includes/procesar_usuario.php?eliminar=${id}`, function(respuesta){
+            const data = JSON.parse(respuesta);
+            alert(data.mensaje);
+            cargarUsuarios();
+        });
+    });
 });

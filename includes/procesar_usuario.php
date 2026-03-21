@@ -31,7 +31,7 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
                     genero = ?" .
                     (!empty($pass) ? ", clave = ?" : "" ) . "
                     WHERE id_usuario = ?";
-                    
+
             $stmt = $mysqli->prepare($sql);
 
             if(!empty($pass)){
@@ -96,8 +96,8 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
 
 }
 
-if(isset($GET['eliminar'])){
-    $id = $GET['eliminar'];
+if(isset($_GET['eliminar'])){
+    $id = $_GET['eliminar'];
     $sql = "DELETE FROM usuarios WHERE id_usuario = ?";
     $stmt = $mysqli->prepare($sql);
     $stmt->bind_param("i",$id);
